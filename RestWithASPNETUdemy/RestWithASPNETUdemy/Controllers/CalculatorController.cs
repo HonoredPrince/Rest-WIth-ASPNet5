@@ -29,12 +29,22 @@ namespace RestWithASPNETUdemy.Controllers
             return BadRequest("Invalid Input");
         }
 
-        private int ConvertToDecimal(string number){
-            throw new NotImplementedException();
+        private decimal ConvertToDecimal(string stringNumber){
+            decimal decimalValue;
+            if(decimal.TryParse(stringNumber, out decimalValue))
+            {
+                return decimalValue;
+            }
+            return 0;
         }
 
-        private bool IsNumeric(string number){
-            throw new NotImplementedException();
+        private bool IsNumeric(string stringNumber){
+            double i;
+            bool result = double.TryParse(stringNumber, 
+                System.Globalization.NumberStyles.Any, 
+                System.Globalization.NumberFormatInfo.InvariantInfo, 
+                out i);
+            return result;
         }
         
     }
