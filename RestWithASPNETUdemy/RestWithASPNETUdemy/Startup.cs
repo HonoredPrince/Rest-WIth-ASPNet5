@@ -6,8 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using RestWithASPNETUdemy.Model.Context;
-using RestWithASPNETUdemy.Business;
-using RestWithASPNETUdemy.Business.Implementations;
+using RestWithASPNETUdemy.Service;
+using RestWithASPNETUdemy.Service.Implementations;
 using RestWithASPNETUdemy.Repository;
 using RestWithASPNETUdemy.Repository.Implementations;
 using Serilog;
@@ -50,12 +50,10 @@ namespace RestWithASPNETUdemy
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestWithASPNETUdemy", Version = "v1" });
             });
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IBookService, BookService>();
 
-            services.AddScoped<IPersonBusiness, PersonBusiness>();
-            services.AddScoped<IPersonRepository, PersonRepository>();
-
-            services.AddScoped<IBookBusiness, BookBusiness>();
-            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

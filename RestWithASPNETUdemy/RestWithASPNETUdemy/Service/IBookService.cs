@@ -1,9 +1,9 @@
 ﻿using RestWithASPNETUdemy.Model;
 using System.Collections.Generic;
 
-namespace RestWithASPNETUdemy.Business
+namespace RestWithASPNETUdemy.Service
 {
-    public interface IBookBusiness
+    public interface IBookService
     {
         Book GetBook(long id);
         List<Book> GetBooks();

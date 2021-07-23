@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using RestWithASPNETUdemy.Business;
+using RestWithASPNETUdemy.Service;
 using RestWithASPNETUdemy.Model;
 
 namespace RestWithASPNETUdemy.Controllers
@@ -12,24 +12,24 @@ namespace RestWithASPNETUdemy.Controllers
     {
 
         private readonly ILogger<PersonController> _logger;
-        private IPersonBusiness _personBusiness;
+        private IPersonService _personService;
 
-        public PersonController(ILogger<PersonController> logger, IPersonBusiness personBusiness)
+        public PersonController(ILogger<PersonController> logger, IPersonService personBusiness)
         {
             _logger = logger;
-            _personBusiness = personBusiness;
+            _personService = personBusiness;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_personBusiness.GetPersons());
+            return Ok(_personService.GetPersons());
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var person = _personBusiness.GetPerson(id);
+            var person = _personService.GetPerson(id);
             if(person == null)
             {
                 return NotFound();
@@ -44,7 +44,7 @@ namespace RestWithASPNETUdemy.Controllers
             {
                 return BadRequest();
             }
-            return Ok(_personBusiness.Create(person));
+            return Ok(_personService.Create(person));
         }
 
         [HttpPut]
@@ -54,13 +54,13 @@ namespace RestWithASPNETUdemy.Controllers
             {
                 return BadRequest();
             }
-            return Ok(_personBusiness.Update(person));
+            return Ok(_personService.Update(person));
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            _personBusiness.Delete(id);
+            _personService.Delete(id);
             return NoContent();
         }
     }
