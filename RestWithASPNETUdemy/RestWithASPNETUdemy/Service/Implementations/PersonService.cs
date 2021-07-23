@@ -1,4 +1,6 @@
-﻿using RestWithASPNETUdemy.Model;
+﻿using RestWithASPNETUdemy.Data.Converter.Implementations;
+using RestWithASPNETUdemy.Data.VO;
+using RestWithASPNETUdemy.Model;
 using RestWithASPNETUdemy.Repository;
 using System.Collections.Generic;
 
@@ -7,30 +9,36 @@ namespace RestWithASPNETUdemy.Service.Implementations
     public class PersonService : IPersonService
     {
         private readonly IRepository<Person> _repository;
-        
+        private readonly PersonConverter _converter;
         public PersonService(IRepository<Person> repository)
         {
             _repository = repository;
+            _converter = new PersonConverter();
         }
 
-        public Person GetPerson(long id)
+        public PersonVO GetPerson(long id)
         {
-            return _repository.FindById(id);
+
+            return _converter.Parse(_repository.FindById(id));
+        } 
+
+        public List<PersonVO> GetPersons()
+        {
+            return _converter.Parse(_repository.FindAll());
         }
 
-        public List<Person> GetPersons()
+        public PersonVO Create(PersonVO person)
         {
-            return _repository.FindAll();
+            var personEntity = _converter.Parse(person);
+            personEntity = _repository.Create(personEntity);
+            return _converter.Parse(personEntity);
         }
 
-        public Person Create(Person person)
+        public PersonVO Update(PersonVO person)
         {
-            return _repository.Create(person);
-        }
-
-        public Person Update(Person person)
-        {
-            return _repository.Update(person);
+            var personEntity = _converter.Parse(person);
+            personEntity = _repository.Update(personEntity);
+            return _converter.Parse(personEntity);
         }
 
         public void Delete(long id)

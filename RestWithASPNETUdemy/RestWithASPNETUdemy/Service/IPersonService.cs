@@ -1,14 +1,14 @@
-﻿using RestWithASPNETUdemy.Model;
+﻿using RestWithASPNETUdemy.Data.VO;
 using System.Collections.Generic;
 
 namespace RestWithASPNETUdemy.Service
 {
     public interface IPersonService
     {
-        Person GetPerson(long id);
-        List<Person> GetPersons(); 
-        Person Create(Person person);
-        Person Update(Person person);
+        PersonVO GetPerson(long id);
+        List<PersonVO> GetPersons(); 
+        PersonVO Create(PersonVO person);
+        PersonVO Update(PersonVO person);
         void Delete(long id);
     }
 }
