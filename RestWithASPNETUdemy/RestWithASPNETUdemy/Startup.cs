@@ -13,6 +13,9 @@ using RestWithASPNETUdemy.Repository.Implementations;
 using Serilog;
 using MySqlConnector;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
+using RestWithASPNETUdemy.Hypermedia.Filters;
+using RestWithASPNETUdemy.Hypermedia.Enricher;
 
 namespace RestWithASPNETUdemy
 {
@@ -43,6 +46,21 @@ namespace RestWithASPNETUdemy
                 MigrateDatabse(connection);
             }
 
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml").ToString());
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json").ToString());
+            })
+            .AddXmlSerializerFormatters();
+
+            var filterOptions = new HypermediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+            filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
+
+            services.AddSingleton(filterOptions);
+            
             //Versioning API
             services.AddApiVersioning();
 
@@ -50,6 +68,7 @@ namespace RestWithASPNETUdemy
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestWithASPNETUdemy", Version = "v1" });
             });
+
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IBookService, BookService>();
 
@@ -75,6 +94,7 @@ namespace RestWithASPNETUdemy
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=value}/{id?}");
             });
         }
 
