@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using RestWithASPNETUdemy.Hypermedia.Filters;
 using RestWithASPNETUdemy.Hypermedia.Enricher;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace RestWithASPNETUdemy
 {
@@ -35,6 +36,13 @@ namespace RestWithASPNETUdemy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
+
             services.AddControllers();
 
             var connection = Configuration["MYSQLConnection:MySQLConnectionString"];
@@ -66,7 +74,18 @@ namespace RestWithASPNETUdemy
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestWithASPNETUdemy", Version = "v1" });
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "RestWithASPNETUdemy",
+                        Version = "v1",
+                        Description = "API RESTful developed in C# course",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Honored Prince",
+                            Url = new System.Uri("https://github.com/honoredprince")
+                        }
+                    });
             });
 
             services.AddScoped<IPersonService, PersonService>();
@@ -88,6 +107,18 @@ namespace RestWithASPNETUdemy
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("swagger/v1/swagger.json", "RestWithASPNETUdemy - v1");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
 
             app.UseAuthorization();
 
