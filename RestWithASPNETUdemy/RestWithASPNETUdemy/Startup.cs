@@ -25,6 +25,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace RestWithASPNETUdemy
 {
@@ -131,9 +133,12 @@ namespace RestWithASPNETUdemy
                     });
             });
 
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IFileService, FileService>();
 
             services.AddTransient<ITokenInterface, TokenService>();
 
