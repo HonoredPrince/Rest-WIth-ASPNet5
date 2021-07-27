@@ -9,6 +9,7 @@ namespace RestWithASPNETUdemy.Service
         List<PersonVO> GetPersons(); 
         PersonVO Create(PersonVO person);
         PersonVO Update(PersonVO person);
+        PersonVO Disable(long id);
         void Delete(long id);
     }
 }

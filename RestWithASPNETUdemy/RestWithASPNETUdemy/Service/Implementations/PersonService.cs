@@ -8,9 +8,9 @@ namespace RestWithASPNETUdemy.Service.Implementations
 {
     public class PersonService : IPersonService
     {
-        private readonly IRepository<Person> _repository;
+        private readonly IPersonRepository _repository;
         private readonly PersonConverter _converter;
-        public PersonService(IRepository<Person> repository)
+        public PersonService(IPersonRepository repository)
         {
             _repository = repository;
             _converter = new PersonConverter();
@@ -44,6 +44,12 @@ namespace RestWithASPNETUdemy.Service.Implementations
         public void Delete(long id)
         {
             _repository.Delete(id);
+        }
+
+        public PersonVO Disable(long id)
+        {
+            var personEntity = _repository.Disable(id);
+            return _converter.Parse(personEntity);
         }
     }
 }
