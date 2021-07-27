@@ -6,6 +6,7 @@ using RestWithASPNETUdemy.Data.VO;
 using RestWithASPNETUdemy.Hypermedia.Filters;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace RestWithASPNETUdemy.Controllers
 {
@@ -25,15 +26,15 @@ namespace RestWithASPNETUdemy.Controllers
             _personService = personBusiness;
         }
 
-        [HttpGet]
+        [HttpGet("{sortDirection}/{pageSize}/{page}")]
         [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] string name, string sortDirection, int pageSize, int page)
         {
-            return Ok(_personService.GetPersons());
+            return Ok(_personService.FindWithPagedSearch(name, sortDirection, pageSize, page));
         }
 
         [HttpGet("{id}")]
@@ -42,6 +43,7 @@ namespace RestWithASPNETUdemy.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
+        
         public IActionResult Get(long id)
         {
             var person = _personService.GetPerson(id);
@@ -50,6 +52,22 @@ namespace RestWithASPNETUdemy.Controllers
                 return NotFound();
             }
             return Ok(person); 
+        }
+
+        [HttpGet("findPersonByName")]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Get([FromQuery] string firstName, [FromQuery] string lastName)
+        {
+            var person = _personService.GetPersonsByName(firstName, lastName);
+            if (person == null)
+            {
+                return NotFound();
+            }
+            return Ok(person);
         }
 
         [HttpPost]
