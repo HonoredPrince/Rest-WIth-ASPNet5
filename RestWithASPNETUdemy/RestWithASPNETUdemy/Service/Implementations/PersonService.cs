@@ -39,11 +39,11 @@ namespace RestWithASPNETUdemy.Service.Implementations
             var size = (pageSize < 1) ? 10 : pageSize;
             var offset = page > 0 ? (page - 1) * size : 0;
 
-            string query = @"select * from person p where 1 = 1 ";
+            string query = @"select * from Person p where 1 = 1 ";
             if (!string.IsNullOrWhiteSpace(name)) query = query + $" and p.first_name like '%{name}%' ";
             query += $" order by p.first_name {sort} limit {size} offset {offset}";
 
-            string countQuery = @"select count(*) from person p where 1 = 1 ";
+            string countQuery = @"select count(*) from Person p where 1 = 1 ";
             if (!string.IsNullOrWhiteSpace(name)) countQuery = countQuery + $" and p.first_name like '%{name}%' ";
 
             var persons = _repository.FindWithPagedSearch(query);

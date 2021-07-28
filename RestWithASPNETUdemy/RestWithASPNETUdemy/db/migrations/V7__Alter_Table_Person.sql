@@ -1,2 +1,2 @@
-﻿ALTER TABLE `person`
+﻿ALTER TABLE `Person`
 	ADD COLUMN `enabled` BIT(1) NOT NULL DEFAULT b'1' AFTER `gender`;

@@ -94,10 +94,10 @@ namespace RestWithASPNETUdemy
             
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
-            if (Environment.IsDevelopment())
+            /*if (Environment.IsDevelopment())
             {
                 MigrateDatabse(connection);
-            }
+            }*/
 
             services.AddMvc(options =>
             {
@@ -122,7 +122,7 @@ namespace RestWithASPNETUdemy
                 c.SwaggerDoc("v1",
                     new OpenApiInfo
                     {
-                        Title = "RestWithASPNETUdemy",
+                        Title = "REST API's with ASP.NET Core 5 and Docker",
                         Version = "v1",
                         Description = "API RESTful developed in C# course",
                         Contact = new OpenApiContact
@@ -153,8 +153,8 @@ namespace RestWithASPNETUdemy
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestWithASPNETUdemy v1"));
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestWithASPNETUdemy v1"));
             }
 
             app.UseHttpsRedirection();
@@ -166,7 +166,7 @@ namespace RestWithASPNETUdemy
             app.UseSwagger();
 
             app.UseSwaggerUI(c => {
-                c.SwaggerEndpoint("swagger/v1/swagger.json", "RestWithASPNETUdemy - v1");
+                c.SwaggerEndpoint("swagger/v1/swagger.json", "REST API's with ASP.NET Core 5 and Docker - v1");
             });
 
             var option = new RewriteOptions();

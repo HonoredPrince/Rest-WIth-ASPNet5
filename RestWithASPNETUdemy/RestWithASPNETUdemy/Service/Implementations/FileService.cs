@@ -16,7 +16,7 @@ namespace RestWithASPNETUdemy.Service.Implementations
         public FileService(IHttpContextAccessor context)
         { 
             _context = context;
-            _basePath = Directory.GetCurrentDirectory() + "\\UploadDir\\";
+            _basePath = Directory.GetCurrentDirectory() + "\\UploadDir\\"; //Change Directory path to match your OS notation
         }
 
         public byte[] GetFile(string filename)

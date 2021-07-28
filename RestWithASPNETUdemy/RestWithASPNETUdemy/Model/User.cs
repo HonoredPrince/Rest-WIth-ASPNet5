@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RestWithASPNETUdemy.Model
 {
-    [Table("users")]
+    [Table("Users")]
     public class User
     {
         [Key]
