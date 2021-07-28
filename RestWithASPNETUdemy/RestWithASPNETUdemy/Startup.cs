@@ -166,7 +166,7 @@ namespace RestWithASPNETUdemy
             app.UseSwagger();
 
             app.UseSwaggerUI(c => {
-                c.SwaggerEndpoint("swagger/v1/swagger.json", "REST API's with ASP.NET Core 5 and Docker - v1");
+                c.SwaggerEndpoint("v1/swagger.json", "REST API's with ASP.NET Core 5 and Docker - v1");
             });
 
             var option = new RewriteOptions();
