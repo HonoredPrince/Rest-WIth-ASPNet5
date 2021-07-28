@@ -13,3 +13,14 @@
 
 ### Postman Collection
 - You can import the **JSON** in the **Postman-Collection** directory to your running Postman account for viewing the API requests
+
+### Database
+- Docker will create a MYSQL image in a container with the **port 3308** exposed
+- Can use any viewer of preference that **supports MYSQL databases**
+
+#### To connect to the database:
+
+- **Hostname:** localhost
+- **Port:** 3308
+- **Username:** docker
+- **Password:** docker
