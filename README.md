@@ -2,6 +2,7 @@
 
 ### Requirements:
 - **Docker** and **Docker-Compose** installed
+- **Docker Daemon** running (e.g **sudo systemctl start docker.service**)
 
 ### Running the application
 - **cd RestWithASPNETUdemy**
