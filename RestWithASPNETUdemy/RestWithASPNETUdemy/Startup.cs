@@ -83,6 +83,7 @@ namespace RestWithASPNETUdemy
 
             services.AddCors(options => options.AddDefaultPolicy(builder =>
             {
+                builder.WithOrigins(Configuration.GetSection("AllowedOrigins").Get<string[]>());
                 builder.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader();
@@ -94,10 +95,10 @@ namespace RestWithASPNETUdemy
             
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
-            /*if (Environment.IsDevelopment())
-            {
+            //if (Environment.IsDevelopment())
+            //{
                 MigrateDatabse(connection);
-            }*/
+            //}
 
             services.AddMvc(options =>
             {
@@ -166,7 +167,8 @@ namespace RestWithASPNETUdemy
             app.UseSwagger();
 
             app.UseSwaggerUI(c => {
-                c.SwaggerEndpoint("v1/swagger.json", "REST API's with ASP.NET Core 5 and Docker - v1");
+                //c.SwaggerEndpoint("v1/swagger.json", "REST API's with ASP.NET Core 5 and Docker - v1");
+                c.SwaggerEndpoint("v1/swagger.json", "REST API's with ASP.NET Core 5 - v1");
             });
 
             var option = new RewriteOptions();
