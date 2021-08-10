@@ -7,6 +7,9 @@
 ### Running the application
 - **cd RestWithASPNETUdemy**
 - **docker-compose up -d --build**
+- **docker ps -a** to check if containers are running
+- **docker logs *"container id or name"*** to see the container logs
+- **docker exec -it *"container name"* /bin/bash** to get a bash shell in the container that is running.
 
 ### Open the API on Swagger
 - API is by default hosted in **http://localhost:44300**
@@ -25,3 +28,7 @@
 - **Port:** 3308
 - **Username:** docker
 - **Password:** docker
+
+#### Access Front-End 
+
+- Hosted in **http://localhost:80**
