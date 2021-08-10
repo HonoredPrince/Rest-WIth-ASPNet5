@@ -33,6 +33,24 @@ services:
       - db
     networks:
       - udemy-network
+  
+  rest-with-asp-net-udemy-front-end:
+    image: rest-with-asp-net-udemy-front-end
+    build:
+      context: ..
+      dockerfile: Client/Dockerfile
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+    ports:
+      - 80:80
+    volumes:
+      - ../Client/src:/app/src
+      - ../Client/public:/app/public
+    depends_on:
+      - db
+    networks:
+      - udemy-network
 
 networks:
   udemy-network:
