@@ -29,6 +29,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
     ports:
       - 44300:80
+    volumes:
+      - ./UploadDir:/app/UploadDir
     depends_on:
       - db
     networks:

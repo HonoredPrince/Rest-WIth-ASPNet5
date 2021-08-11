@@ -16,7 +16,7 @@ namespace RestWithASPNETUdemy.Service.Implementations
         public FileService(IHttpContextAccessor context)
         { 
             _context = context;
-            _basePath = Directory.GetCurrentDirectory() + "\\UploadDir\\"; //Change Directory path to match your OS notation
+            _basePath = Directory.GetCurrentDirectory() + "/UploadDir/"; //Change Directory path to match your OS notation
         }
 
         public byte[] GetFile(string filename)
@@ -43,7 +43,7 @@ namespace RestWithASPNETUdemy.Service.Implementations
             var baseUrl = _context.HttpContext.Request.Host;
 
             if(fileType.ToLower() == ".pdf" || fileType.ToLower() == ".jpg" || 
-               fileType.ToLower() == " .png" || fileType.ToLower() == ".jpeg")
+               fileType.ToLower() == ".png" || fileType.ToLower() == ".jpeg")
             {
                 var docName = Path.GetFileName(file.FileName);
                 if (file != null && file.Length > 0)
