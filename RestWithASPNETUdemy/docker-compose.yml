@@ -30,7 +30,7 @@ services:
     ports:
       - 44300:80
     volumes:
-      - ./UploadDir:/app/UploadDir
+      - ./RestWithASPNETUdemy/UploadDir:/app/UploadDir
     depends_on:
       - db
     networks:

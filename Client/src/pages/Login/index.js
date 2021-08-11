@@ -30,7 +30,7 @@ export default function Login() {
             localStorage.setItem('accessToken', response.data.accessToken);
             localStorage.setItem('refreshToken', response.data.refreshToken);
 
-            history.push('/books');
+            history.push('/selector');
         } catch (error) {
             alert('Login failed! Try again!');
         }

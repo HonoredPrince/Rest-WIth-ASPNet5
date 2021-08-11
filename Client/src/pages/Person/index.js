@@ -8,9 +8,9 @@ import './styles.css';
 
 import logoImage from '../../assets/logo.svg';
 
-export default function Book(){
+export default function Person(){
 
-    const [books, setBooks] = useState([]);
+    const [persons, setPersons] = useState([]);
     const [page, setPage] = useState(1);
 
     const userName = localStorage.getItem('userName');
@@ -25,12 +25,12 @@ export default function Book(){
     };
 
     useEffect(() => {
-        fetchMoreBooks();
+        fetchMorePersons();
     }, [accessToken]);
 
-    async function fetchMoreBooks() {
-        const response = await api.get(`api/Book/v1/asc/4/${page}`, authorization);
-        setBooks([ ...books, ...response.data.list]);
+    async function fetchMorePersons() {
+        const response = await api.get(`api/Person/v1/asc/4/${page}`, authorization);
+        setPersons([ ...persons, ...response.data.list]);
         setPage(page + 1);
     }
 
@@ -45,27 +45,27 @@ export default function Book(){
         }
     }
 
-    async function editBook(id){
+    async function editPerson(id){
         try {
-            history.push(`book/new/${id}`);
+            history.push(`person/new/${id}`);
         } catch (error) {
-            alert('Edit book failed! Try Again!');
+            alert('Edit person failed! Try Again!');
         }
     }
 
-    async function deleteBook(id) {
+    async function deletePerson(id) {
         try {
-            await api.delete(`api/book/v1/${id}`, authorization)
+            await api.delete(`api/person/v1/${id}`, authorization)
             
-            setBooks(books.filter(book => book.id !== id))
+            setPersons(persons.filter(person => person.id !== id))
         } catch (error) {
-            alert('Error deleting Book! Try Again!')
+            alert('Error deleting person! Try Again!')
         }
     }
 
 
     return (
-        <div className="book-container">
+        <div className="person-container">
             <header>
                 <img src={logoImage} alt="Erudio"/>
                 <span>Welcome, <strong>{userName.toLowerCase()}</strong>!</span>
@@ -73,37 +73,35 @@ export default function Book(){
                         <FiArrowLeft size={16} color="#251fc5"/>
                         Back to Selector
                 </Link>
-                <Link className="button" to="book/new/0">Add New Book</Link>
+                <Link className="button" to="person/new/0">Add New Person</Link>
                 <button onClick={logout} type="button">
                     <FiPower size={18} color="#251FC5" />
                 </button>
             </header>
 
-            <h1>Registered Books</h1>
+            <h1>Registered Persons</h1>
 
             <ul>
-                {books.map(book => (
-                    <li key={book.id}>
-                        <strong>Title:</strong>
-                        <p>{book.title}</p>
-                        <strong>Author:</strong>
-                        <p>{book.author}</p>
-                        <strong>Price:</strong>
-                        <p>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(book.price)}</p>
-                        <strong>Release Date:</strong>
-                        <p>{Intl.DateTimeFormat('pt-BR').format(new Date(book.launchDate))}</p>
+                {persons.map(person => (
+                    <li key={person.id}>
+                        <strong>Name</strong>
+                        <p>{person.firstName} {person.lastName}</p>
+                        <strong>Gender:</strong>
+                        <p>{person.gender}</p>
+                        <strong>Address:</strong>
+                        <p>{person.address}</p>
 
-                        <button onClick={() => editBook(book.id)} type="button">
+                        <button onClick={() => editPerson(person.id)} type="button">
                             <FiEdit size={20} color="#251FC5"/>
                         </button>
 
-                        <button onClick={() => deleteBook(book.id)} type="button">
+                        <button onClick={() => deletePerson(person.id)} type="button">
                             <FiTrash2 size={20} color="#251FC5"/>
                         </button>
                     </li>
                 ))}
             </ul>
-            <button className="button" onClick={fetchMoreBooks} type="button">Load More</button>
+            <button className="button" onClick={fetchMorePersons} type="button">Load More</button>
         </div>
     );
 }
