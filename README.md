@@ -32,3 +32,7 @@
 #### Access Front-End 
 
 - Hosted in **http://localhost:80**
+
+#### User and Password for log in
+- Login: **admin**
+- Password: **admin123**
